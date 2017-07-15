@@ -3,9 +3,13 @@
   "description": "Chrome alerts app about news surrounding the NBA",
   "version": "0.1",
   "manifest_version": 2,
-  "app": {
-    "background": {
-      "scripts": ["background.js"]
-    }
-  }
+  "background": {
+    "scripts": ["background.js", "api.js"]
+  },
+  "browser_action":{
+    "default_popup": "window.html"
+  },
+  "permissions": [
+    "notifications"
+  ]
 }
