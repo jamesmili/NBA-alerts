@@ -7,7 +7,9 @@ getData()
     iconUrl: "woj-bomb.png"
   }
   chrome.notifications.create(options);
-
+  chrome.notifications.onClicked.addListener(function(){
+    chrome.tabs.create({url: info.link}, callback)
+  })
   return info;
 })
 .then(info =>{
@@ -23,7 +25,7 @@ function getData(){
   return new Promise((resolve,reject) => {
     $.getJSON(
       "https://www.reddit.com/r/nba/search.json?q=%5Bwojnarowski%5D&sort=new&restrict_sr=on&t=all",
-      function foo(data)
+      function getData(data)
       {
         $.each(
           data.data.children.slice(0, 10),

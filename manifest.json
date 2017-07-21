@@ -10,6 +10,7 @@
     "default_popup": "window.html"
   },
   "permissions": [
-    "notifications"
+    "notifications",
+    "tabs"
   ]
 }
