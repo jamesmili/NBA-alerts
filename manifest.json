@@ -11,6 +11,10 @@
   },
   "permissions": [
     "notifications",
-    "tabs"
-  ]
+    "tabs",
+    "storage"
+  ],
+  "icons":{
+    "32":"woj-bomb.png"
+  }
 }
