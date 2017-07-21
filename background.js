@@ -8,7 +8,7 @@ getData()
   }
   chrome.notifications.create(options);
   chrome.notifications.onClicked.addListener(function(){
-    chrome.tabs.create({url: info.link}, callback)
+    chrome.tabs.create({url: info.link})
   })
   return info;
 })
