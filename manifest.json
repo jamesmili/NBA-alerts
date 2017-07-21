@@ -1,7 +1,7 @@
 {
   "name": "NBA Alerts",
   "description": "Chrome alerts app about news surrounding the NBA",
-  "version": "0.1",
+  "version": "1.0",
   "manifest_version": 2,
   "background": {
     "scripts": ["jquery.min.js"]
