@@ -1,13 +1,10 @@
 {
-  "name": "NBA Alerts",
+  "name": "Wojbomb",
   "description": "Chrome alerts app about news surrounding the NBA",
   "version": "1.0",
   "manifest_version": 2,
   "background": {
-    "scripts": ["jquery.min.js"]
-  },
-  "browser_action":{
-    "default_popup": "window.html"
+    "scripts": ["jquery.min.js","background.js"]
   },
   "permissions": [
     "notifications",
