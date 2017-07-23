@@ -1,4 +1,11 @@
+
+createChromeNotification()
+
 setInterval(function(){
+  createChromeNotification()
+}, 30000);
+
+function createChromeNotification(){
   getData()
   .then(info => doesExist(info))
   .then(info => {
@@ -17,7 +24,7 @@ setInterval(function(){
   .then(info =>{
     store(info.link)
   })
-}, 30000);
+}
 
 function getData(){
   return new Promise((resolve,reject) => {
@@ -28,7 +35,8 @@ function getData(){
         $.each(
           data.data.children.slice(0, 100),
           function (i, post) {
-            if (post.data.title[0] === "["){
+            if (post.data.title[0] === "[" && post.data.url.includes("twitter")){
+              console.log(post.data.url)
               let data = post.data.title;
               let link = post.data.url;
               resolve({data, link});
