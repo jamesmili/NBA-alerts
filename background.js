@@ -1,5 +1,6 @@
 setInterval(function(){
   getData()
+  .then(info => doesExist(info))
   .then(info => {
     let options = {
       type: "basic",
@@ -16,13 +17,12 @@ setInterval(function(){
   .then(info =>{
     store(info.link)
   })
-}, 60000)
-
+}, 60000);
 
 function getData(){
   return new Promise((resolve,reject) => {
     $.getJSON(
-      "http://www.reddit.com/r/nba/new.json?sort=new&limit=10&t=hour",
+      "http://www.reddit.com/r/nba/new.json?sort=new&t=hour",
       function getData(data)
       {
         $.each(
@@ -37,6 +37,19 @@ function getData(){
         )
       }
     )
+  })
+}
+
+function doesExist(info){
+  return new Promise((resolve,reject) =>{
+    chrome.storage.local.get(function(data){
+      var links = data.links || [];
+      if (links.indexOf(info.link) === -1){
+        resolve(info);
+      }else{
+        reject('Notification was already seen');
+      }
+    })
   })
 }
 
