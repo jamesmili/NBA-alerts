@@ -17,7 +17,7 @@ setInterval(function(){
   .then(info =>{
     store(info.link)
   })
-}, 60000);
+}, 30000);
 
 function getData(){
   return new Promise((resolve,reject) => {
@@ -26,7 +26,7 @@ function getData(){
       function getData(data)
       {
         $.each(
-          data.data.children.slice(0, 10),
+          data.data.children.slice(0, 100),
           function (i, post) {
             if (post.data.title[0] === "["){
               let data = post.data.title;
