@@ -3,7 +3,7 @@ var link = "";
 createChromeNotification()
 setInterval(function(){
   createChromeNotification()
-}, 2000);
+}, 30000);
 
 function createChromeNotification(){
   getData()
@@ -15,7 +15,6 @@ function createChromeNotification(){
       message: info.data,
       iconUrl: info.icon
     }
-    var link = info.link
     chrome.notifications.create(options);
     return info;
   })
