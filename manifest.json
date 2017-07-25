@@ -1,5 +1,5 @@
 {
-  "name": "Wojbomb",
+  "name": "NBA alerts",
   "description": "A chrome extension that keeps you updated with any NBA related news.",
   "version": "1.0",
   "manifest_version": 2,
@@ -12,6 +12,6 @@
     "storage"
   ],
   "icons":{
-    "32":"woj-bomb.png"
+    "128":"nba.png"
   }
 }
