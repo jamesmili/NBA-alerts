@@ -7,7 +7,7 @@ setInterval(function(){
 
 function createChromeNotification(){
   getData()
-  .then(info => doesExist(link))
+  .then(info => doesExist(info.tweet))
   .then(info => {
     let options = {
       type: "basic",
@@ -15,11 +15,12 @@ function createChromeNotification(){
       message: info.data,
       iconUrl: info.icon
     }
+    link = info.tweet
     chrome.notifications.create(options);
     return info;
   })
   .then(info =>{
-    store(link)
+    store(info.tweet)
   })
 }
 
@@ -29,36 +30,27 @@ chrome.notifications.onClicked.addListener(function(){
 
 function getData(){
   return new Promise((resolve,reject) => {
-    $.getJSON(
-      "http://www.reddit.com/r/nba/new.json?sort=new&t=hour'",
-      function getData(data)
-      {
+    $.getJSON("http://www.reddit.com/r/nba/new.json?sort=new&t=hour'",function getData(data){
         $.each(
-          data.data.children.slice(0, 100),
+          data.data.children,
           function (i, post) {
             if (post.data.title[0] === "[" && post.data.url.includes("twitter")){
-              if (post.data.title.includes('Wojnarowski')){
-                let title = "Wojbomb"
-                let icon = "woj-bomb.png"
-                let data = post.data.title;
-                link = post.data.url;
-                resolve({title,icon,data});
-              }else{
-                let title = "NBA Alerts"
-                let icon = "nba.png"
-                let data = post.data.title;
-                link = post.data.url;
-                resolve({title,icon,data});
+              let title = "NBA Alerts"
+              let icon = "nba.png"
+              if(post.data.url.includes("Wojnarowski")){
+                title = "Wojbomb";
+                icon = "woj-bomb.png";
               }
-            }else{
-              reject('No new tweets')
+                let data = post.data.title;
+                let tweet = post.data.url;
+                resolve({title,icon,data,tweet});
+              }
             }
-          }
-        )
-      }
-    )
-  })
-}
+          )
+        }
+      )
+    })
+  }
 
 function doesExist(url){
   return new Promise((resolve,reject) =>{
