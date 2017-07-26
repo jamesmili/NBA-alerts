@@ -1,4 +1,5 @@
 var link = "";
+var news = [];
 
 createChromeNotification()
 setInterval(function(){
@@ -7,7 +8,7 @@ setInterval(function(){
 
 function createChromeNotification(){
   getData()
-  .then(info => doesExist(info.tweet))
+  .then(info => doesExist(info))
   .then(info => {
     let options = {
       type: "basic",
@@ -19,9 +20,6 @@ function createChromeNotification(){
     chrome.notifications.create(options);
     return info;
   })
-  .then(info =>{
-    store(info.tweet)
-  })
 }
 
 chrome.notifications.onClicked.addListener(function(){
@@ -30,14 +28,14 @@ chrome.notifications.onClicked.addListener(function(){
 
 function getData(){
   return new Promise((resolve,reject) => {
-    $.getJSON("http://www.reddit.com/r/nba/new.json?sort=new&t=hour'",function getData(data){
+    $.getJSON("https://www.reddit.com/search.json?q=subreddit%3Anba+site%3Atwitter.com&sort=new&restrict_sr=&t=hour&limit=5'",function getData(data){
         $.each(
           data.data.children,
           function (i, post) {
-            if (post.data.title[0] === "[" && post.data.url.includes("twitter")){
+            if (post.data.title[0] === "["){
               let title = "NBA Alerts"
               let icon = "nba.png"
-              if(post.data.url.includes("Wojnarowski")){
+              if(post.data.url.includes("wojespn")){
                 title = "Wojbomb";
                 icon = "woj-bomb.png";
               }
@@ -52,25 +50,21 @@ function getData(){
     })
   }
 
-function doesExist(url){
+function doesExist(info){
   return new Promise((resolve,reject) =>{
-    chrome.storage.local.get(function(data){
-      var links = url|| [];
-      if (links.indexOf(url) === -1){
-        resolve(info);
-      }else{
-        reject('Notification was already seen');
-      }
-    })
+    if(news.includes(info.tweet)){
+      reject('Notification was already seen')
+    }else{
+      storeTweets(info.tweet)
+      resolve(info)
+    }
   })
 }
 
-function store(url){
-  return new Promise((resolve,reject) => {
-    chrome.storage.local.get(function(data){
-      var links = data.links || [];
-      links.push(url);
-      chrome.storage.local.set({links})
-    })
-  })
+function storeTweets(tweet){
+  if (news.length === 5){
+    news.splice(0,1)
+  }
+  news.push(tweet)
+  console.log(news)
 }
