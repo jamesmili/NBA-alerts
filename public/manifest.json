@@ -1,0 +1,17 @@
+{
+  "name": "NBA News",
+  "description": "A chrome extension that keeps you updated with any NBA related news.",
+  "version": "1.0",
+  "manifest_version": 2,
+  "permissions": [
+    "notifications",
+    "tabs",
+    "storage"
+  ],
+  "icons":{
+    "128":"img/nba.png"
+  },
+  "browser_action":{
+    "default_popup": "index.html"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "nbaalerts",
+  "version": "1.0.0",
+  "description": "A chrome extension that keeps you updated with any NBA related news.",
+  "main": "background.js",
+  "dependencies": {
+    "chai": "^4.1.0",
+    "file-loader": "^0.11.2",
+    "image-webpack-loader": "^3.3.1",
+    "jquery": "^3.2.1",
+    "material-ui": "^0.18.7",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-tap-event-plugin": "^2.0.1"
+  },
+  "devDependencies": {
+    "axios": "^0.16.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "mocha": "^3.4.2",
+    "react-redux": "^5.0.5",
+    "react-scripts": "1.0.7",
+    "redux": "^3.7.1",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "webpack-dev-server --open",
+    "create": "webpack",
+    "build": "react-scripts build"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesmili/NBA-alerts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesmili/NBA-alerts/issues"
+  },
+  "homepage": "https://github.com/jamesmili/NBA-alerts#readme"
+}
