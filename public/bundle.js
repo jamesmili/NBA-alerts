@@ -58237,70 +58237,67 @@ var DataList = exports.DataList = function (_Component) {
       var getTimeStamp = function getTimeStamp(utc) {
         var current = new Date(new Date().getTime());
         var postTime = new Date(utc * 1000);
-        if (current.getDate() > postTime.getDate()) {
-          var hours = 24 - (postTime.getHours() - current.getHours());
-          if (hours > 0) {
+        var timeDiff = Math.abs(current.getTime() - postTime.getTime());
+        var diffMinutes = Math.floor(timeDiff / 60000);
+        var diffHours = Math.floor(diffMinutes / 60);
+        var diffDays = Math.floor(diffHours / 60);
+
+        if (diffDays > 1) {
+          return _react2.default.createElement(
+            'p',
+            { style: timeText },
+            diffDays,
+            ' days ago'
+          );
+        } else if (diffDays === 1) {
+          return _react2.default.createElement(
+            'p',
+            { style: timeText },
+            '1 day ago'
+          );
+        } else {
+          if (diffHours > 1) {
             return _react2.default.createElement(
               'p',
               { style: timeText },
-              current.getDate() - postTime.getDate(),
-              ' day ago'
-            );
-          } else {
-            return _react2.default.createElement(
-              'p',
-              { style: timeText },
-              hours,
+              diffHours,
               ' hours ago'
             );
-          }
-        } else if (current.getDate() === postTime.getDate()) {
-          var hours = current.getHours() - postTime.getHours();
-          if (hours == 0) {
-            var minutes = current.getMinutes() - postTime.getMinutes();
-            if (minutes == 0) {
+          } else if (diffHours === 1) {
+            return _react2.default.createElement(
+              'p',
+              { style: timeText },
+              '1 hour ago'
+            );
+          } else {
+            if (diffMinutes > 1) {
               return _react2.default.createElement(
                 'p',
                 { style: timeText },
-                'Just now'
+                diffMinutes,
+                ' minutes ago'
               );
-            } else if (minutes == 1) {
+            } else if (diffMinutes === 1) {
               return _react2.default.createElement(
                 'p',
                 { style: timeText },
-                minutes,
-                ' minute ago'
+                '1 minute ago'
               );
             } else {
               return _react2.default.createElement(
                 'p',
                 { style: timeText },
-                minutes,
-                ' minutes ago'
+                'just now'
               );
             }
-          } else if (hours == 1) {
-            return _react2.default.createElement(
-              'p',
-              { style: timeText },
-              hours,
-              ' hour ago'
-            );
-          } else {
-            return _react2.default.createElement(
-              'p',
-              { style: timeText },
-              hours,
-              ' hours ago'
-            );
           }
         }
       };
       var wojBomb = function wojBomb(title) {
         if (title.includes("[Wojnarowski]")) {
-          return _react2.default.createElement(_Avatar2.default, { src: './src/img/woj-bomb.png', backgroundColor: 'white' });
+          return _react2.default.createElement(_Avatar2.default, { src: 'img/woj-bomb.png', backgroundColor: 'white' });
         } else {
-          return _react2.default.createElement(_Avatar2.default, { src: './src/img/nba.png', backgroundColor: 'white' });
+          return _react2.default.createElement(_Avatar2.default, { src: 'img/nba.png', backgroundColor: 'white' });
         }
       };
 
@@ -58334,6 +58331,10 @@ var DataList = exports.DataList = function (_Component) {
           'No new News '
         ) : this.state.posts.map(function (post) {
           return _react2.default.createElement(_List.ListItem, { key: (0, _nodeUuid2.default)(),
+            onTouchTap: function onTouchTap() {
+              return newsClicked(post.url);
+            },
+            leftAvatar: wojBomb(post.title),
             primaryText: _react2.default.createElement(
               'span',
               { style: newsText },

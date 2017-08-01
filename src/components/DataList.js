@@ -33,36 +33,36 @@ export class DataList extends Component{
     var getTimeStamp = (utc) => {
       var current = new Date(new Date().getTime())
       var postTime = new Date(utc*1000);
-      if (current.getDate() > postTime.getDate()){
-        var hours = 24 - (postTime.getHours() - current.getHours())
-        if (hours > 0){
-          return (<p style={timeText}>{current.getDate()-postTime.getDate()} day ago</p>)
+      var timeDiff = Math.abs(current.getTime() - postTime.getTime());
+      var diffMinutes = Math.floor(timeDiff / 60000);
+      var diffHours = Math.floor(diffMinutes / 60);
+      var diffDays = Math.floor(diffHours / 60);
+
+      if (diffDays > 1){
+        return (<p style={timeText}>{diffDays} days ago</p>)
+      }else if (diffDays === 1){
+        return (<p style={timeText}>1 day ago</p>)
+      }else{
+        if (diffHours > 1){
+          return (<p style={timeText}>{diffHours} hours ago</p>)
+        }else if (diffHours === 1){
+          return (<p style={timeText}>1 hour ago</p>)
         }else{
-          return (<p style={timeText}>{hours} hours ago</p>)
-        }
-      }else if (current.getDate() === postTime.getDate()){
-        var hours = current.getHours() - postTime.getHours()
-        if (hours == 0){
-          var minutes = current.getMinutes() - postTime.getMinutes()
-          if (minutes == 0){
-            return (<p style={timeText}>Just now</p>)
-          }else if (minutes == 1){
-            return (<p style={timeText}>{minutes} minute ago</p>)
+          if (diffMinutes > 1){
+            return (<p style={timeText}>{diffMinutes} minutes ago</p>)
+          }else if (diffMinutes === 1){
+            return (<p style={timeText}>1 minute ago</p>)
           }else{
-            return (<p style={timeText}>{minutes} minutes ago</p>)
+            return (<p style={timeText}>just now</p>)
           }
-        }else if (hours == 1){
-          return (<p style={timeText}>{hours} hour ago</p>)
-        }else{
-          return (<p style={timeText}>{hours} hours ago</p>)
         }
       }
     }
     var wojBomb = (title) => {
       if (title.includes("[Wojnarowski]")){
-        return <Avatar src="./src/img/woj-bomb.png" backgroundColor="white"/>
+        return <Avatar src="img/woj-bomb.png" backgroundColor="white"/>
       }else{
-        return <Avatar src="./src/img/nba.png" backgroundColor="white"/>
+        return <Avatar src="img/nba.png" backgroundColor="white"/>
       }
     }
 
@@ -92,8 +92,11 @@ export class DataList extends Component{
           {!this.state.posts ? <p>No new News </p> :
             this.state.posts.map(post =>
                 <ListItem key={uuid()}
+                  onTouchTap={() => newsClicked(post.url)}
+                  leftAvatar={wojBomb(post.title)}
                   primaryText={
-                    <span style={newsText}>{post.title}</span>}
+                    <span style={newsText}>{post.title}</span>
+                  }
                   secondaryText={
                     getTimeStamp(post.created_utc)
                   }
