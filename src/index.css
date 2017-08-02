@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Changa+One');
 
 html,body{
-  font-size: 12px;
-  width:420px;
-  height:400px;
+  width:400px;
+  height:420px;
+}
+
+#root{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
