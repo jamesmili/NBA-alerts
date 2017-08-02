@@ -1,6 +1,6 @@
 # NBA Alerts
 
-A chrome extension that keeps you updated with any NBA related news.
+A chrome extension built with React that keeps you updated with any NBA related news.
 
 How to install:
 
