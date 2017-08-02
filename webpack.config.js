@@ -3,15 +3,17 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 
 var config = {
-    entry: './src/index.js',
+    entry: {
+      bundle:'./src/index.js',
+      background:'./src/background.js'},
     output: {
         path: path.resolve(__dirname, 'public'),
-        filename: './bundle.js'
+        filename: '[name].min.js'
     },
     resolve: {
         alias: {
           Main: path.join(__dirname, './src/components/Main.js'),
-          DataList: path.join(__dirname, './src/components/DataList.js')
+          NewsList: path.join(__dirname, './src/components/NewsList.js')
         },
         extensions: ['.js', '.jsx']
     },
@@ -33,14 +35,7 @@ var config = {
                 },
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/
-            },
-            {
-              test: /\.(jpe?g|png|gif|svg)$/i,
-              loaders: [
-                'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-              ]
-            } 
+            }
         ]
     },
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import DataList from 'DataList';
+import NewsList from 'NewsList';
 import Divider from 'material-ui/Divider';
 
 export class Main extends Component{
@@ -15,7 +15,7 @@ export class Main extends Component{
       <div>
         <h1 style={header}>NBA News</h1>
         <Divider/>
-        <DataList/>
+        <NewsList/>
       </div>
     )
   }

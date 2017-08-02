@@ -3,6 +3,9 @@
   "description": "A chrome extension that keeps you updated with any NBA related news.",
   "version": "1.0",
   "manifest_version": 2,
+  "background": {
+    "scripts": ["jquery.min.js","background.min.js"]
+  },
   "permissions": [
     "notifications",
     "tabs",
