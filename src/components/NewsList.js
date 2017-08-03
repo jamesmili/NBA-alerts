@@ -35,7 +35,7 @@ export class NewsList extends Component{
 */
 
   updateData(){
-    axios.get("https://www.reddit.com/search.json?q=subreddit%3Anba+site%3Atwitter.com&restrict_sr=&sort=new&t=day&limit=13")
+    axios.get("https://www.reddit.com/r/nba/search.json?q=twitter&sort=new&restrict_sr=on&t=day")
     .then(res =>{
       let posts = []
       res.data.data.children.map(function(obj) {
@@ -124,7 +124,8 @@ export class NewsList extends Component{
 
     var content = {
       height:"360px",
-      overflow: "auto"
+      overflow: "auto",
+      padding: "0"
     }
 
     return(

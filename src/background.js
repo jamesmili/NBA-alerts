@@ -31,7 +31,7 @@ function createChromeNotification(){
 */
 function getData(){
   return new Promise((resolve,reject) => {
-    $.getJSON("https://www.reddit.com/search.json?q=subreddit%3Anba+site%3Atwitter.com&sort=new&restrict_sr=&t=hour&limit=5'",function getData(data){
+    $.getJSON("https://www.reddit.com/r/nba/search.json?q=twitter&sort=new&restrict_sr=on&t=day",function getData(data){
         $.each(
           data.data.children,
           function (i, post) {
