@@ -1,11 +1,13 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
+var ChromeDevPlugin = require("chrome-dev-webpack-plugin");
 
 var config = {
     entry: {
       bundle:'./src/index.js',
-      background:'./src/background.js'},
+      background:'./src/background.js'
+    },
     output: {
         path: path.resolve(__dirname, 'public'),
         filename: '[name].min.js'
@@ -42,7 +44,8 @@ var config = {
     devServer: {
         historyApiFallback: true
     },
-    plugins: [new HtmlWebpackPlugin({
+    plugins: [
+      new HtmlWebpackPlugin({
       template: 'src/index.html',
       minify: {
         collapseWhitespace: true,
@@ -51,7 +54,20 @@ var config = {
         removeScriptTypeAttributes: true,
         removeStyleLinkTypeAttributes: true
       }
-    })]
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    }),
+    new ChromeDevPlugin({
+      entry: "src/manifest.json",
+      output:"manifest.json",
+      log:console.log,
+      warm:console.warn,
+      error:console.error,
+      version: "1.0"
+    })
+  ]
 };
 
 module.exports = config;

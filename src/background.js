@@ -1,3 +1,4 @@
+import 'jquery';
 /**
 * Global variable for chrome.notification.onClicked.addListener
 */
