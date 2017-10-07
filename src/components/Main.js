@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import NewsList from 'NewsList';
 import Divider from 'material-ui/Divider';
 
+/*
+* Root component responsible for rendering all components
+*/
+
 export class Main extends Component{
   render(){
     var header = {
@@ -14,9 +18,9 @@ export class Main extends Component{
 
     return(
       <div>
-      <header>
-        <h1 style={header}>NBA News</h1>
-      </header>
+        <header>
+          <p style={header}>NBA News</p>
+        </header>
         <Divider/>
         <NewsList/>
       </div>

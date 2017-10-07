@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import axios from "axios";
-import {List, ListItem} from 'material-ui/List';
+import List from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import uuid from 'node-uuid';
+import News from 'News';
 
-//ignores the variable chrome when compiling
-declare var chrome: any;
+var api = require('Api');
 
 export class NewsList extends Component{
   constructor(props){
@@ -15,10 +14,7 @@ export class NewsList extends Component{
       posts: []
     }
     this.updateData = this.updateData.bind(this);
-    this.getTimeStamp = this.getTimeStamp.bind(this);
     this.renderNews = this.renderNews.bind(this);
-
-    this.updateData();
   }
 
   /**
@@ -30,62 +26,13 @@ export class NewsList extends Component{
   }
 
 /**
-* Uses axios library to get JSON from the reddit api and
-* is placed in an array in state
+* get data from api and place data in current state
 */
 
   updateData(){
-    axios.get("https://www.reddit.com/r/nba/search.json?q=twitter&sort=new&restrict_sr=on&t=day")
-    .then(res =>{
-      let posts = []
-      res.data.data.children.map(function(obj) {
-        if (obj.data.title.includes("[")){
-          posts.push(obj.data)
-        }
-      });
-      this.setState({posts});
-    })
-  }
-
-/**
-* Calculates the the time difference between current time
-* and reddit thread posted time
-*
-* @param utc the thread posted time in UTC epoch time
-* @return a <p> element with the time difference between current and posted time
-*/
-
-  getTimeStamp(utc){
-    var timeText = {
-      fontSize: "10px"
-    }
-
-    var current = new Date(new Date().getTime())
-    var postTime = new Date(utc*1000);
-    var timeDiff = Math.abs(current.getTime() - postTime.getTime());
-    var diffMinutes = Math.floor(timeDiff / 60000);
-    var diffHours = Math.floor(diffMinutes / 60);
-    var diffDays = Math.floor(diffHours / 60);
-
-    if (diffDays > 1){
-      return (<p style={timeText}>{diffDays} days ago</p>)
-    }else if (diffDays === 1){
-      return (<p style={timeText}>1 day ago</p>)
-    }else{
-      if (diffHours > 1){
-        return (<p style={timeText}>{diffHours} hours ago</p>)
-      }else if (diffHours === 1){
-        return (<p style={timeText}>1 hour ago</p>)
-      }else{
-        if (diffMinutes > 1){
-          return (<p style={timeText}>{diffMinutes} minutes ago</p>)
-        }else if (diffMinutes === 1){
-          return (<p style={timeText}>1 minute ago</p>)
-        }else{
-          return (<p style={timeText}>just now</p>)
-        }
-      }
-    }
+    api.getTweets().then((data) => {
+      this.setState({posts: data})
+    });
   }
 
 /**
@@ -96,32 +43,12 @@ export class NewsList extends Component{
 
   renderNews(){
 
-    var newsClicked = (postURL) => {
-      chrome.tabs.create({url: postURL})
-    }
-
-    var newsText = {
-      fontSize: "12px",
-      height: "10px"
-
-    }
     return(
       !this.state.posts ? <p>No new News </p> :
-      this.state.posts.map(post =>
-          <ListItem key={uuid()}
-            onTouchTap={() => newsClicked(post.url)}
-            primaryText={
-              <span style={newsText}>{post.title}</span>
-            }
-            secondaryText={
-              this.getTimeStamp(post.created_utc)
-            }
-            secondaryTextLines={2}/>
-        ))
+      this.state.posts.map(posts => <News key={uuid()} posts={posts}/>))
   }
 
   render(){
-
     var content = {
       height:"360px",
       overflow: "auto",

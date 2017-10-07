@@ -15,7 +15,9 @@ var config = {
     resolve: {
         alias: {
           Main: path.join(__dirname, './src/components/Main.js'),
-          NewsList: path.join(__dirname, './src/components/NewsList.js')
+          NewsList: path.join(__dirname, './src/components/NewsList.js'),
+          News: path.join(__dirname, './src/components/News.js'),
+          Api: path.join(__dirname, './src/utils/api.js')
         },
         extensions: ['.js', '.jsx']
     },

@@ -1,4 +1,4 @@
-import 'jquery';
+var api = require('Api');
 /**
 * Global variable for chrome.notification.onClicked.addListener
 */
@@ -11,18 +11,19 @@ function createChromeNotification(){
   getData()
   .then(info => doesExist(info))
   .then(info => {
+    console.log(info)
     let options = {
       type: "basic",
-      title: info.title,
-      message: info.data,
-      iconUrl: info.icon
+      title: "NBA Alert",
+      message: info[0].title,
+      iconUrl: "img/nba.png"
     }
-    link = info.tweet
+    link = info[0].url
     chrome.notifications.create(options);
     return info;
   })
   .then(info =>{
-    store(info.tweet)
+    store(info[0].url)
   })
 }
 
@@ -30,28 +31,8 @@ function createChromeNotification(){
 * Uses jquery to read JSON from reddit api
 */
 function getData(){
-  return new Promise((resolve,reject) => {
-    $.getJSON("https://www.reddit.com/r/nba/search.json?q=twitter&sort=new&restrict_sr=on&t=day",function getData(data){
-        $.each(
-          data.data.children,
-          function (i, post) {
-            if (post.data.title[0] === "["){
-              let title = "NBA Alerts"
-              let icon = "/img/nba.png"
-              if(post.data.url.includes("wojespn")){
-                title = "Wojbomb";
-                icon = "/img/woj-bomb.png";
-              }
-                let data = post.data.title;
-                let tweet = post.data.url;
-                resolve({title,icon,data,tweet});
-              }
-            }
-          )
-        }
-      )
-    })
-  }
+  return api.getTweets()
+}
 
 
 /**
@@ -61,7 +42,7 @@ function doesExist(info){
   return new Promise((resolve,reject) =>{
     chrome.storage.local.get('links',function(data){
       var links = data.links || [];
-      if (links.indexOf(info.tweet) === -1){
+      if (links.indexOf(info[0].url) === -1){
         resolve(info);
       }else{
         reject('Notification was already seen');
@@ -95,5 +76,6 @@ chrome.notifications.onClicked.addListener(function(){
 */
 createChromeNotification()
 setInterval(function(){
+  console.log("Checking")
   createChromeNotification()
 }, 60000);
