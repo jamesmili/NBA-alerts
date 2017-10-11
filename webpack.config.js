@@ -17,7 +17,7 @@ var config = {
           Main: path.join(__dirname, './src/components/Main.js'),
           NewsList: path.join(__dirname, './src/components/NewsList.js'),
           News: path.join(__dirname, './src/components/News.js'),
-          Api: path.join(__dirname, './src/utils/api.js')
+          Api: path.join(__dirname, './src/utils/api.js'),
         },
         extensions: ['.js', '.jsx']
     },
@@ -29,6 +29,18 @@ var config = {
             }, {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
+            },
+            {
+              test: /\.(png|jpg|gif)$/,
+              use: [
+                {
+                  loader: 'file-loader',
+                  options: {
+                    name: 'nba.png',
+                    outputPath: './img/'
+                  }
+                }
+              ]
             }
         ],
         loaders: [

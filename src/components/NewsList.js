@@ -50,7 +50,7 @@ export class NewsList extends Component{
 
   render(){
     var content = {
-      height:"360px",
+      height:"340px",
       overflow: "auto",
       padding: "0"
     }
