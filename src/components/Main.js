@@ -15,17 +15,6 @@ declare var chrome: any;
 export class Main extends Component{
   constructor(props){
     super(props);
-    this.state = {
-      enable: false
-    }
-    this.togglePopUp = this.togglePopUp.bind(this);
-  }
-
-  togglePopUp(event, isInputChecked){
-    this.setState({enable: !isInputChecked})
-    console.log(isInputChecked)
-    console.log(this.state.enable)
-    console.log("///////")
   }
   render(){
 
@@ -34,15 +23,7 @@ export class Main extends Component{
       fontFamily: "Chewy",
       textAlign: "center",
       fontSize: "30px",
-      overflow: "hidden",
       margin: "0"
-    },
-    footer:{
-      height:"10px"
-    },
-    toggle: {
-      fontSize: "15px",
-      maxWidth: 100
     }
   }
 
@@ -53,14 +34,6 @@ export class Main extends Component{
         </header>
         <Divider/>
         <NewsList/>
-        <Divider/>
-        <footer style={styles.footer}>
-          <Checkbox label="Notifications"
-          defaultChecked={true}
-          style={styles.toggle}
-          onCheck={this.togglePopUp}
-          />
-        </footer>
       </div>
     )
   }
