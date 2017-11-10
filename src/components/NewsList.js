@@ -7,7 +7,8 @@ import News from 'News';
 import IconButton from 'material-ui/IconButton';
 import AutoRenew from 'material-ui/svg-icons/action/autorenew';
 import Divider from 'material-ui/Divider';
-import RefreshIndicator from 'material-ui/RefreshIndicator';
+import CircularProgress from 'material-ui/CircularProgress';
+
 
 var api = require('Api');
 
@@ -69,13 +70,18 @@ export class NewsList extends Component{
       icon:{
         height: "20px",
         width: "20px"
+      },
+      refresh:{
+        top: "125px",
+        left: "165px"
+
       }
     }
     return(
       <div>
         <div style={styles.content}>
           {!this.state.posts
-          ? <RefreshIndicator size={50} left={165} top={165} loadingColor="#8A8A8A" status="loading" style={styles.refresh}/>
+          ? <CircularProgress size={50} color="#8A8A8A" style={styles.refresh}/>
           : <List>{this.renderNews()}</List>
           }
         </div>
