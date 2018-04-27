@@ -10,3 +10,5 @@ How to install:
 4) Visit **chrome://extensions** on your chrome browser
 5)  Make sure **Developer mode** is enabled
 6) Click on **Load unpacked extension...** and load the **public** folder
+
+![](https://i.imgur.com/NK6x7KC.png)
