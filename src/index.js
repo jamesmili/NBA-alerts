@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import Main from 'Main';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import './index.css';
-
-injectTapEventPlugin()
+import Main from  './components/Main';
 
 ReactDOM.render(
-  <MuiThemeProvider>
-      <Main />
-  </MuiThemeProvider>,
-    document.getElementById('root')
+  <React.StrictMode>
+    <Main />
+  </React.StrictMode>,
+  document.getElementById('root')
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

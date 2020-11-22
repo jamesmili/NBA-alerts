@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
 import NewsList from 'NewsList';
-import Divider from 'material-ui/Divider';
-import Checkbox from 'material-ui/Checkbox';
-
-import logo from '../img/nba.png';
-
-//ignores the variable chrome when compiling
-declare var chrome: any;
+import Divider from '@material-ui/core/Divider';
 
 /*
 * Root component responsible for rendering all components
@@ -39,4 +33,4 @@ export class Main extends Component{
   }
 }
 
-module.exports = Main
+export default Main;

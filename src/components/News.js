@@ -1,8 +1,7 @@
+/*global chrome*/
 import React, {Component} from 'react';
-import {ListItem} from 'material-ui/List';
-
-//ignores the variable chrome when compiling
-declare var chrome: any;
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 export class News extends Component{
   constructor(props){
@@ -63,17 +62,14 @@ export class News extends Component{
 
     var post = this.props.posts;
     return(
-      <ListItem key={post.id}
-        onTouchTap={() => newsClicked(post.url)}
-        primaryText={
-          <span style={newsText}>{post.title}</span>
-        }
-        secondaryText={
-          this.getTimeStamp(post.created_utc)
-        }
-        secondaryTextLines={2}/>
-    )
+      <ListItem key={post.id} divider={true} button onClick={() => newsClicked(post.url)}>
+          <ListItemText
+              primary={<span style={newsText}>{post.title}</span>}
+              secondary={this.getTimeStamp(post.created_utc)}
+          />
+      </ListItem>
+  )
   }
 }
 
-module.exports = News
+export default News;

@@ -1,25 +1,26 @@
+/*global chrome*/
 import React, {Component} from 'react';
-import List from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import Avatar from 'material-ui/Avatar';
-import uuid from 'node-uuid';
+import {v1 as uuid} from 'uuid';
 import News from 'News';
-import IconButton from 'material-ui/IconButton';
-import AutoRenew from 'material-ui/svg-icons/action/autorenew';
-import Divider from 'material-ui/Divider';
-import CircularProgress from 'material-ui/CircularProgress';
-
-
+import List from '@material-ui/core/List';
+import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 var api = require('Api');
 
 export class NewsList extends Component{
   constructor(props){
     super(props)
     this.state = {
-      posts: null
+      posts: null,
+      notification: true
     }
     this.updateData = this.updateData.bind(this);
     this.renderNews = this.renderNews.bind(this);
+    this.handleNotification = this.handleNotification.bind(this)
   }
 
 /**
@@ -27,7 +28,15 @@ export class NewsList extends Component{
 */
 
   componentWillMount(){
+
     this.updateData();
+    var initNotificationState = true
+    chrome.storage.local.get({ 'notification': this.state.notification}, function (result) {
+      if (result.hasOwnProperty('notification')){
+        initNotificationState = result.notification
+      }
+    });
+    this.setState({ notification: initNotificationState })
   }
 
 /**
@@ -54,44 +63,41 @@ export class NewsList extends Component{
       this.state.posts.map(posts => <News key={uuid()} posts={posts}/>))
   }
 
+  handleNotification(event){
+    this.setState({
+      notification: event.target.checked
+    }, () =>{
+      chrome.storage.local.set({ 'notification': this.state.notification}, function () {
+      var enabled = this.state.notification ? 'enabled' : 'disabled'
+      console.log("Notification " + enabled);
+    });
+    })
+  }
 
   render(){
-    const styles = {
-      content:{
-        height: "330px",
-        overflow: "auto",
-        padding: "0px"
-      },
-      button:{
-        height: "40px",
-        width: "40px",
-        padding: "10px"
-      },
-      icon:{
-        height: "20px",
-        width: "20px"
-      },
-      refresh:{
-        top: "125px",
-        left: "165px"
-
-      }
-    }
     return(
       <div>
-        <div style={styles.content}>
+        <div className="content">
           {!this.state.posts
-          ? <CircularProgress size={50} color="#8A8A8A" style={styles.refresh}/>
+          ? <div className="loading"><CircularProgress size={50} color="#8A8A8A"/></div>
           : <List>{this.renderNews()}</List>
           }
         </div>
         <Divider/>
-        <IconButton iconStyle={styles.icon} style={styles.button} onClick={() => {this.updateData()}}>
-          <AutoRenew/>
-        </IconButton>
+        <div className="footer">
+          <IconButton onClick={() => {this.updateData()}}>
+            <AutorenewIcon/>
+          </IconButton>
+          <FormControlLabel control={
+            <Switch
+            checked={this.state.notification}
+            onChange={this.handleNotification}
+            color='primary'/>
+          } label="Notification" />
+        </div>
       </div>
     )
   }
 }
 
-module.exports = NewsList
+export default NewsList

@@ -11,12 +11,11 @@ function createChromeNotification(){
   getData()
   .then(info => doesExist(info))
   .then(info => {
-    console.log(info)
     let options = {
       type: "basic",
       title: "NBA Alert",
       message: info[0].title,
-      iconUrl: "img/nba.png"
+      iconUrl: "nba.png"
     }
     link = info[0].url
     chrome.notifications.create(options);
@@ -24,6 +23,9 @@ function createChromeNotification(){
   })
   .then(info =>{
     store(info[0].url)
+  })
+  .catch(err =>{
+    console.log(err)
   })
 }
 
@@ -72,10 +74,19 @@ chrome.notifications.onClicked.addListener(function(){
 });
 
 /**
-* Run function every minute to see if there are any new news
+* Run alarm every minute to see if there are any new news
 */
-createChromeNotification()
-setInterval(function(){
-  console.log("Checking")
-  createChromeNotification()
-}, 60000);
+chrome.alarms.get('myAlarm', function (alarm) {
+  if (alarm == null) {
+      chrome.alarms.create('myAlarm', { periodInMinutes: 1 });
+      chrome.storage.local.set({'notification': true}, function() {
+    });
+  }
+});
+chrome.alarms.onAlarm.addListener(function (alarm) {
+  chrome.storage.local.get('notification', function(data) {
+      if (data.notification) {
+        createChromeNotification()
+      }
+  });
+});

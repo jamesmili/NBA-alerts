@@ -6,9 +6,10 @@ import axios from "axios";
 */
 
 export var getTweets = () => {
+  console.log('api')
   var url = "https://www.reddit.com/r/nba/search.json?q=url%3Atwitter&restrict_sr=on&sort=new&t=week";
   return axios.get(url).then(res =>{
-    let posts = []
+    var posts = []
     res.data.data.children.map(function(obj) {
       if (obj.data.url.includes("twitter")){
         posts.push(obj.data)

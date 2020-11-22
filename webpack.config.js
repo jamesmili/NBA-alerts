@@ -1,15 +1,17 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
-var ChromeDevPlugin = require("chrome-dev-webpack-plugin");
+const baseManifest = require("./src/manifest.json");
+const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 var config = {
     entry: {
       bundle:'./src/index.js',
-      background:'./src/background.js'
+      background:'./src/background.js',
     },
     output: {
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, 'build'),
         filename: '[name].min.js'
     },
     resolve: {
@@ -23,36 +25,33 @@ var config = {
     },
     module: {
         rules: [
-            {
-                test: /\.(js)$/,
-                use: 'babel-loader'
-            }, {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            },
-            {
-              test: /\.(png|jpg|gif)$/,
-              use: [
-                {
-                  loader: 'file-loader',
-                  options: {
-                    name: 'nba.png',
-                    outputPath: './img/'
-                  }
+          {
+              test: /\.css$/,
+              use: ['style-loader', 'css-loader']
+          },
+          {
+            test: /\.(png|jpg|gif)$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: 'nba.png',
+                  outputPath: './img/'
                 }
-              ]
+              }
+            ]
+          },
+          {
+            test: /\.m?js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env', '@babel/preset-react']
+              }
             }
+          }
         ],
-        loaders: [
-            {
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015', 'react', 'stage-0']
-                },
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/
-            }
-        ]
     },
 
     devServer: {
@@ -60,27 +59,32 @@ var config = {
     },
     plugins: [
       new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: './src/index.html',
       minify: {
         collapseWhitespace: true,
         removeComments: true,
         removeRedundantAttributes: true,
         removeScriptTypeAttributes: true,
         removeStyleLinkTypeAttributes: true
-      }
+      },
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
     }),
-    new ChromeDevPlugin({
-      entry: "src/manifest.json",
-      output:"manifest.json",
-      log:console.log,
-      warm:console.warn,
-      error:console.error,
-      version: "1.0"
-    })
+    new WebpackExtensionManifestPlugin({
+      config: {
+        base: baseManifest
+      }
+    }),
+    new CopyPlugin({
+      patterns: [
+          {
+              from: path.resolve(__dirname, './src/img/'),
+              to: path.resolve(__dirname, 'build')
+          }
+      ]
+    }),
   ]
 };
 

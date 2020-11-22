@@ -1,46 +1,52 @@
 {
-  "name": "nbaalerts",
-  "version": "1.0.0",
-  "description": "A chrome extension that keeps you updated with any NBA related news.",
-  "main": "background.js",
+  "name": "nba-alerts",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "jquery": "^3.2.1",
-    "material-ui": "^0.18.7",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-tap-event-plugin": "^2.0.1"
-  },
-  "devDependencies": {
-    "axios": "^0.16.1",
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
-    "babel-preset-env": "^1.5.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "chrome-dev-webpack-plugin": "^0.3.3",
-    "css-loader": "^0.28.4",
-    "react-scripts": "1.0.7",
-    "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.2.2",
+    "axios": "^0.21.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.0",
+    "uuid": "^8.3.1",
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --open",
-    "create": "webpack -p"
+    "start": "webpack serve",
+    "create": "webpack --mode production",
+    "dev": "NODE_ENV=development webpack --mode development --config webpack.js --watch",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "babel": {
-    "presets": [
-      "env",
-      "react"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jamesmili/NBA-alerts.git"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jamesmili/NBA-alerts/issues"
-  },
-  "homepage": "https://github.com/jamesmili/NBA-alerts#readme"
+  "devDependencies": {
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "copy-webpack-plugin": "^6.3.2",
+    "webpack": "^5.6.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-extension-manifest-plugin": "^0.5.0"
+  }
 }

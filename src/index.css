@@ -2,7 +2,7 @@
 
 html,body{
   width:390px;
-  height:410px;
+  height:416px;
   margin: 0;
 }
 
@@ -18,4 +18,27 @@ html,body{
   position: absolute;
   width: 100% !important;
   height: 100% !important;
+}
+
+.content{
+  height: 330px;
+  overflow: auto;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+
+}
+
+.loading{
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
