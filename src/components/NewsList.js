@@ -30,13 +30,14 @@ export class NewsList extends Component{
   componentWillMount(){
 
     this.updateData();
-    var initNotificationState = true
-    chrome.storage.local.get({ 'notification': this.state.notification}, function (result) {
-      if (result.hasOwnProperty('notification')){
-        initNotificationState = result.notification
+    chrome.storage.local.get('notification', (data) => {
+      if (data.hasOwnProperty('notification')) {
+        this.setState({ notification: data.notification })
+      }
+      else{
+        this.setState({ notification: true})
       }
     });
-    this.setState({ notification: initNotificationState })
   }
 
 /**
@@ -67,10 +68,10 @@ export class NewsList extends Component{
     this.setState({
       notification: event.target.checked
     }, () =>{
-      chrome.storage.local.set({ 'notification': this.state.notification}, function () {
-      var enabled = this.state.notification ? 'enabled' : 'disabled'
-      console.log("Notification " + enabled);
-    });
+      chrome.storage.local.set({ 'notification': event.target.checked}, function () {
+        var enabled = event.target.checked ? 'enabled' : 'disabled'
+        console.log("Notification " + enabled);
+      });
     })
   }
 
