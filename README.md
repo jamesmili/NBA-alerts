@@ -8,4 +8,4 @@ How to install:
 2) ```npm run create```
 3) Visit **chrome://extensions** on your chrome browser
 4)  Make sure **Developer mode** is enabled
-5) Click on **Load unpacked extension...** and load the **public** folder
+5) Click on **Load unpacked extension...** and load the **build** folder
