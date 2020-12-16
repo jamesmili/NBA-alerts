@@ -12,10 +12,11 @@ export var getTweets = () => {
     var posts = []
     var tweetUrl
     res.data.data.children.map(function(obj) {
-      tweetUrl = obj.data.url.toLowerCase()
-      if (obj.data.url.includes("twitter") && !urls.has(tweetUrl)){
+      tweetUrl = obj.data.url.toLowerCase().match(/twitter.com\/(?:#!\/)?(\w+)\/status\/\d+/g)
+      console.log(tweetUrl)
+      if (tweetUrl && !urls.has(tweetUrl[0])){
         posts.push(obj.data)
-        urls.add(tweetUrl)
+        urls.add(tweetUrl[0])
       }
     });
     return posts;
